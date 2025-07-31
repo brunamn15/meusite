@@ -1,812 +1,791 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criativos Inteligentes: Domine a IA</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --c-fuchsia: #E4007C;
-            --c-green-neon: #39FF14;
-            --c-charcoal-deep: #1B1B1B;
-            --c-ice-white: #F2F2F2;
-            --c-medium-gray: #777777;
-            --c-blue-deep: #0077FF;
-        }
-        
-        /* Estilos para a página de destino */
-        body { font-family: 'Inter', sans-serif; background-color: var(--c-charcoal-deep); color: var(--c-ice-white);}
-        h1, h2, h3, h4, h5, h6 { font-family: 'Orbitron', sans-serif; }
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
-        .hero-background { position: absolute; inset: 0; background-color: #0d0d0d; opacity: 0.9; }
-        .hero-headline, .hero-subheadline { z-index: 10; color: var(--c-ice-white); }
-        .hero-headline { font-size: 2.5rem; line-height: 1.2; font-weight: 700; }
-        .hero-subheadline { font-size: 1.25rem; margin-top: 1rem; }
-        .hero-cta { margin-top: 2rem; }
-        .cta-button { padding: 1rem 2rem; font-weight: 600; border-radius: 9999px; transition: all 0.3s; }
-        .cta-button.primary { background-color: var(--c-fuchsia); color: var(--c-ice-white); }
-        .cta-button.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(228, 0, 124, 0.4); }
-        
-        /* Estilos do Ebook */
-        .gradient-text { background: linear-gradient(45deg, var(--c-fuchsia), var(--c-green-neon)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .gradient-bg-main { background: linear-gradient(45deg, var(--c-fuchsia), var(--c-green-neon)); }
-        .sidebar-link.active { background-color: var(--c-fuchsia); color: var(--c-ice-white); }
-        .sidebar-link.active svg { color: var(--c-ice-white); }
-        .prose { max-width: 80ch; }
-        .btn {
-            display: inline-block;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            transition: all 0.3s ease;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.6s ease;
-            z-index: 1;
-        }
-        .btn:hover::before {
-            left: 100%;
-        }
-        .btn-primary { background-color: var(--c-fuchsia); color: var(--c-ice-white); box-shadow: 0 0 10px rgba(228, 0, 124, 0.5); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(228, 0, 124, 0.8); }
-        .btn-secondary { background-color: transparent; color: var(--c-green-neon); border: 1px solid var(--c-green-neon); box-shadow: 0 0 10px rgba(57, 255, 20, 0.3); }
-        .btn-secondary:hover { background-color: var(--c-green-neon); color: var(--c-charcoal-deep); box-shadow: 0 0 20px rgba(57, 255, 20, 0.6); }
-        .card { background-color: #2A2A2A; border-radius: 1rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); border: 1px solid #333333; }
-        .card-light { background-color: var(--c-ice-white); color: var(--c-charcoal-deep); border: 1px solid #e5e7eb; }
 
-        /* Estilos do Carrossel da Landing Page */
-        .preview-carousel { position: relative; overflow: hidden; width: 100%; }
-        .preview-slide { display: none; }
-        .preview-slide.active { display: block; }
-        .carousel-controls { display: flex; align-items: center; justify-content: center; margin-top: 1rem; }
-        .carousel-btn { background: none; border: none; font-size: 2rem; color: var(--c-ice-white); cursor: pointer; }
-        .carousel-dots { display: flex; gap: 0.5rem; margin: 0 1rem; }
-        .dot { width: 10px; height: 10px; background-color: var(--c-medium-gray); border-radius: 50%; cursor: pointer; transition: background-color 0.3s; }
-        .dot.active { background-color: var(--c-fuchsia); }
+    <meta charset="UTF-8">
 
-        /* Estilos para ocultar/exibir o Ebook */
-        .hide-on-click { display: none !important; }
-        .show-on-click { display: flex !important; }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Estilos do botão de voltar */
-        .back-btn {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 50;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: var(--c-ice-white);
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            backdrop-filter: blur(5px);
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .back-btn:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-    </style>
+    <title>eBook Interativo - Domine a IA Criativa</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
-    <!-- CONTAINER DA LANDING PAGE -->
-    <div id="landing-page-container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-background">
-                <div class="geometric-shapes"></div>
-                <div class="circuit-pattern"></div>
-            </div>
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-headline">Transforme Sua Perspectiva Criativa: A IA Como Parceira de Inovação</h1>
-                    <p class="hero-subheadline">Descubra como integrar inteligência artificial ao seu processo criativo de forma estratégica e humanizada, expandindo suas possibilidades sem perder sua essência artística.</p>
-                    <div class="hero-cta">
-                        <button class="cta-button primary" id="access-ebook-btn">ACESSAR GUIA COMPLETO</button>
-                    </div>
-                    <div class="ebook-mockup">
-                        <div class="mockup-device">
-                            <div class="mockup-screen">
-                                <div class="mockup-content">
-                                    <h3>GUIA PRÁTICO</h3>
-                                    <p>IA Criativa Colaborativa</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- O Que Você Vai Receber -->
-        <section class="benefits">
-            <div class="container">
-                <h2 class="section-title">Um Ecossistema Completo de Conhecimento</h2>
-                <p class="section-intro">Este material foi desenvolvido para profissionais criativos que buscam evoluir sua prática através da integração inteligente com IA. Oferecemos uma abordagem estruturada que combina teoria sólida com aplicação prática imediata.</p>
-                
-                <div class="benefits-grid">
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <div class="icon-prompts"></div>
-                        </div>
-                        <h3>Biblioteca de Prompts Estruturados e Validados</h3>
-                        <p>Uma coleção cuidadosamente elaborada de prompts testados em diferentes contextos criativos. Cada prompt é acompanhado de explicações sobre quando e como aplicá-lo, permitindo que você desenvolva sua própria fluência com IA.</p>
-                    </div>
-                    
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <div class="icon-spreadsheets"></div>
-                        </div>
-                        <h3>Ferramentas de Organização e Workflow</h3>
-                        <p>Planilhas e templates que facilitam a gestão de projetos criativos com IA. Desde brainstorming estruturado até controle de versões, oferecemos sistemas práticos para otimizar seu processo de trabalho.</p>
-                    </div>
-                    
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <div class="icon-learning"></div>
-                        </div>
-                        <h3>Metodologia Progressiva de Aprendizado</h3>
-                        <p>Um caminho estruturado que parte dos fundamentos até técnicas avançadas, respeitando diferentes níveis de familiaridade com tecnologia. Cada capítulo constrói sobre o anterior, garantindo compreensão sólida.</p>
-                    </div>
-                    
-                    <div class="benefit-card">
-                        <div class="benefit-icon">
-                            <div class="icon-techniques"></div>
-                        </div>
-                        <h3>Estudos de Caso e Aplicações Práticas</h3>
-                        <p>Análises detalhadas de projetos reais onde IA foi integrada com sucesso, mostrando o processo de tomada de decisão, os desafios enfrentados e as soluções encontradas por profissionais de diferentes áreas.</p>
-                    </div>
-                </div>
+    <!-- Hero Section -->
 
-                <div class="key-benefits">
-                    <h3>Transformações Que Você Pode Esperar:</h3>
-                    <div class="benefits-list">
-                        <div class="benefit-item">
-                            <span class="benefit-check">✓</span>
-                            <div>
-                                <strong>Expansão do Pensamento Criativo:</strong> Desenvolva uma nova perspectiva sobre geração de ideias, usando IA como catalisador para explorar territórios criativos inexplorados.
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="benefit-check">✓</span>
-                            <div>
-                                <strong>Otimização Inteligente de Processos:</strong> Identifique oportunidades de automação que preservam a qualidade criativa enquanto reduzem tempo em tarefas repetitivas.
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="benefit-check">✓</span>
-                            <div>
-                                <strong>Desenvolvimento de Fluência Tecnológica:</strong> Construa confiança e competência no uso de ferramentas de IA, tornando-se um profissional mais versátil e adaptável.
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="benefit-check">✓</span>
-                            <div>
-                                <strong>Posicionamento Estratégico no Mercado:</strong> Compreenda como integrar IA de forma ética e diferenciada, criando valor único em seus projetos e serviços.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="hero">
 
-        <!-- Para Quem É Esse Material -->
-        <section class="target-audience">
-            <div class="container">
-                <h2 class="section-title">Perfil do Profissional Inovador</h2>
-                <p class="section-intro">Este material foi criado para profissionais criativos que reconhecem a importância de evoluir com as tecnologias emergentes, mantendo sua humanidade e propósito no centro do processo criativo.</p>
-                
-                <div class="personas-grid">
-                    <div class="persona-card">
-                        <div class="persona-icon">
-                            <div class="icon-designer"></div>
-                        </div>
-                        <h3>Designer em Evolução</h3>
-                        <p>Você busca expandir suas capacidades criativas e explorar novas formas de expressão visual, usando IA como ferramenta colaborativa para potencializar sua visão artística.</p>
-                    </div>
-                    
-                    <div class="persona-card">
-                        <div class="persona-icon">
-                            <div class="icon-social-media"></div>
-                        </div>
-                        <h3>Estrategista de Conteúdo</h3>
-                        <p>Profissional que deseja criar narrativas mais impactantes e personalizadas, utilizando IA para análise de tendências e geração de insights sobre audiências.</p>
-                    </div>
-                    
-                    <div class="persona-card">
-                        <div class="persona-icon">
-                            <div class="icon-brand"></div>
-                        </div>
-                        <h3>Consultor de Marca</h3>
-                        <p>Especialista em branding que busca ferramentas avançadas para desenvolver identidades mais consistentes e estratégias de posicionamento inovadoras.</p>
-                    </div>
-                    
-                    <div class="persona-card">
-                        <div class="persona-icon">
-                            <div class="icon-content"></div>
-                        </div>
-                        <h3>Criador de Conteúdo Reflexivo</h3>
-                        <p>Profissional focado em produzir conteúdo de qualidade superior, interessado em usar IA para pesquisa, estruturação e refinamento de ideias complexas.</p>
-                    </div>
-                    
-                    <div class="persona-card">
-                        <div class="persona-icon">
-                            <div class="icon-agency"></div>
-                        </div>
-                        <h3>Líder de Equipe Criativa</h3>
-                        <p>Gestor que deseja capacitar sua equipe com metodologias inovadoras, implementando IA de forma estratégica para melhorar colaboração e resultados.</p>
-                    </div>
-                    
-                    <div class="persona-card">
-                        <div class="persona-icon">
-                            <div class="icon-creative"></div>
-                        </div>
-                        <h3>Profissional Criativo Curioso</h3>
-                        <p>Qualquer pessoa que trabalha com criatividade e está genuinamente interessada em compreender como a IA pode enriquecer sua prática profissional.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="hero-background">
 
-        <!-- O Que Torna Esse eBook Diferente -->
-        <section class="differentials">
-            <div class="container">
-                <h2 class="section-title">Nossa Abordagem Diferenciada</h2>
-                <p class="section-intro">Em um cenário saturado de conteúdo superficial sobre IA, desenvolvemos uma metodologia que privilegia a compreensão profunda e a aplicação consciente da tecnologia no contexto criativo.</p>
-                
-                <div class="differentials-list">
-                    <div class="differential-item">
-                        <div class="differential-icon">
-                            <div class="icon-tested"></div>
-                        </div>
-                        <div class="differential-content">
-                            <h3>Prompts Fundamentados em Teoria Criativa</h3>
-                            <p>Cada prompt foi desenvolvido com base em princípios estabelecidos de design thinking e criatividade. Não oferecemos apenas comandos, mas explicamos a lógica por trás de cada abordagem.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="differential-item">
-                        <div class="differential-icon">
-                            <div class="icon-universal"></div>
-                        </div>
-                        <div class="differential-content">
-                            <h3>Metodologia Agnóstica de Plataforma</h3>
-                            <p>Nosso foco está nos princípios universais de colaboração com IA, que podem ser aplicados em qualquer ferramenta atual ou futura, garantindo relevância duradoura do conhecimento.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="differential-item">
-                        <div class="differential-icon">
-                            <div class="icon-visual"></div>
-                        </div>
-                        <div class="differential-content">
-                            <h3>Experiência de Aprendizado Imersiva</h3>
-                            <p>Combinamos texto, visualizações, exemplos interativos e exercícios práticos para facilitar a compreensão e retenção de conceitos complexos sobre IA criativa.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="differential-item">
-                        <div class="differential-icon">
-                            <div class="icon-aesthetic"></div>
-                        </div>
-                        <div class="differential-content">
-                            <h3>Design Como Demonstração Prática</h3>
-                            <p>Este material exemplifica na prática os conceitos que ensina, servindo como um estudo de caso vivo de como IA e criatividade humana podem colaborar harmoniosamente.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="differential-item">
-                        <div class="differential-icon">
-                            <div class="icon-strategy"></div>
-                        </div>
-                        <div class="differential-content">
-                            <h3>Foco em Estratégia e Contexto</h3>
-                            <p>Vamos além do "como fazer" para explorar "quando aplicar" e "por que escolher" determinadas abordagens, desenvolvendo seu pensamento estratégico sobre IA.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="differential-item">
-                        <div class="differential-icon">
-                            <div class="icon-interactive"></div>
-                        </div>
-                        <div class="differential-content">
-                            <h3>Conteúdo Dinâmico e Evolutivo</h3>
-                            <p>Um material interativo que facilita a navegação e compreensão, com recursos multimídia que enriquecem a experiência de aprendizado de forma orgânica.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <div class="geometric-shapes"></div>
 
-        <!-- Prévia do Conteúdo -->
-        <section class="preview">
-            <div class="container">
-                <h2 class="section-title">Jornada de Descoberta</h2>
-                <p class="section-intro">Explore alguns dos conceitos-chave que você encontrará nesta jornada de descoberta sobre a integração criativa com inteligência artificial.</p>
-                
-                <div class="preview-carousel">
-                    <div class="preview-slide active">
-                        <div class="slide-content">
-                            <h3>Fundamentos da Colaboração Criativa com IA</h3>
-                            <p>Compreenda os princípios que regem a parceria efetiva entre criatividade humana e inteligência artificial, estabelecendo bases sólidas para experimentação consciente.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="preview-slide">
-                        <div class="slide-content">
-                            <h3>Anatomia de Prompts Eficazes</h3>
-                            <p>Desvende a estrutura e psicologia por trás de comandos que geram resultados criativos consistentes, aprendendo a comunicar-se efetivamente com sistemas de IA.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="preview-slide">
-                        <div class="slide-content">
-                            <h3>Integração Estratégica em Workflows Criativos</h3>
-                            <p>Descubra como incorporar IA de forma orgânica em seus processos existentes, identificando pontos de alavancagem sem comprometer sua identidade criativa.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="preview-slide">
-                        <div class="slide-content">
-                            <h3>Estudos de Caso: Transformação na Prática</h3>
-                            <p>Analise implementações reais de IA em diferentes contextos criativos, compreendendo desafios, soluções e resultados alcançados por profissionais inovadores.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="preview-slide">
-                        <div class="slide-content">
-                            <h3>Ética e Futuro da Criatividade Assistida</h3>
-                            <p>Reflexões sobre uso responsável de IA, preservação da autenticidade criativa e preparação para as próximas ondas de inovação tecnológica.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="carousel-controls">
-                    <button class="carousel-btn prev">‹</button>
-                    <div class="carousel-dots">
-                        <span class="dot active"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                    <button class="carousel-btn next">›</button>
-                </div>
-                
-                <div class="preview-cta">
-                    <button class="cta-button secondary">INICIAR JORNADA DE APRENDIZADO</button>
-                </div>
-            </div>
-        </section>
+            <div class="circuit-pattern"></div>
 
-        <!-- Depoimentos -->
-        <section class="testimonials">
-            <div class="container">
-                <h2 class="section-title">Impacto na Comunidade Criativa</h2>
-                <p class="section-intro">Profissionais que aplicaram estes conhecimentos compartilham suas experiências de transformação e crescimento através da integração consciente com IA:</p>
-                
-                <div class="testimonials-grid">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Este material mudou fundamentalmente minha relação com tecnologia. Passei de receosa para colaborativa, descobrindo possibilidades criativas que não imaginava existir."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar"></div>
-                            <div class="author-info">
-                                <strong>Ana Clara</strong>
-                                <span>Designer UX/UI</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"A abordagem estruturada me permitiu implementar IA de forma gradual e consciente. Meus projetos ganharam uma nova dimensão de profundidade e inovação."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar"></div>
-                            <div class="author-info">
-                                <strong>Marcos Vinicius</strong>
-                                <span>Diretor Criativo</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <p>"Encontrei aqui o equilíbrio perfeito entre inovação tecnológica e preservação da essência humana no processo criativo. Transformador e inspirador."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar"></div>
-                            <div class="author-info">
-                                <strong>Juliana Lima</strong>
-                                <span>Consultora de Marca</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="validation">
-                    <p>Este material representa o esforço colaborativo de uma equipe multidisciplinar de criativos, tecnólogos e educadores, unidos pela missão de democratizar o acesso ao conhecimento sobre IA criativa de forma ética e inclusiva.</p>
-                </div>
-            </div>
-        </section>
+        </div>
 
-        <!-- CTA Final -->
-        <section class="final-cta">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>Sua Evolução Criativa Começa Agora</h2>
-                    <p>A integração entre criatividade humana e inteligência artificial define uma nova era de possibilidades. Este é o momento de desenvolver as competências que moldarão o futuro da expressão criativa.</p>
-                    <button class="cta-button primary large" id="access-ebook-btn-2">COMEÇAR TRANSFORMAÇÃO CRIATIVA</button>
-                    <p class="cta-subtitle">Acesso completo ao conhecimento • Atualizações contínuas • Comunidade de aprendizado</p>
-                </div>
-            </div>
-        </section>
-    </div>
+        <div class="container">
 
-    <!-- EBOOK INTERATIVO, INICIALMENTE ESCONDIDO -->
-    <div id="ebook-full-view" class="hide-on-click">
-        <button id="back-btn" class="back-btn">← Voltar para a página inicial</button>
-        <nav id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-ice-white border-r border-gray-200 p-6 space-y-6 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40">
-            <h1 class="text-2xl font-bold gradient-text">Criativos IA+</h1>
-            <div id="sidebar-links" class="space-y-2">
-                <a href="#home" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
-                    <span>Capa</span>
-                </a>
-                <a href="#introducao" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>
-                    <span>Introdução</span>
-                </a>
-                <a href="#capitulo1" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.342.117l8.688 4.344a1 1 0 001.146-.342l1.342-2.683a1 1 0 000-1.146l-1.342-2.683a1 1 0 00-.342-.342L10.394 2.08z" /><path d="M12.25 10.151a.999.999 0 01.342.117l8.688 4.344a1 1 0 001.146-.342l1.342-2.683a1 1 0 000-1.146l-1.342-2.683a1 1 0 00-.342-.342L12.25 10.15zM5.25 10.151a.999.999 0 01.342.117l8.688 4.344a1 1 0 001.146-.342l1.342-2.683a1 1 0 000-1.146l-1.342-2.683a1 1 0 00-.342-.342L5.25 10.15z" /></svg>
-                    <span>1. O que é IA</span>
-                </a>
-                <a href="#capitulo2" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
-                    <span>2. O Novo Papel do Criativo</span>
-                </a>
-                <a href="#capitulo3" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 2a1 1 0 00-1 1v14a1 1 0 001 1h10a1 1 0 001-1V3a1 1 0 00-1-1H5zm9 2H6v12h8V4z" clip-rule="evenodd" /></svg>
-                    <span>3. Prompt Design</span>
-                </a>
-                <a href="#capitulo4" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zm-3 3a1 1 0 10-2 0v1a1 1 0 102 0v-1z" /></svg>
-                    <span>4. A Jornada IA+</span>
-                </a>
-                <a href="#capitulo5" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM2 12a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2z" /></svg>
-                    <span>5. Ferramentas Essenciais</span>
-                </a>
-                <a href="#capitulo6" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" /></svg>
-                    <span>6. Casos de Aplicação</span>
-                </a>
-                <a href="#apendice" class="sidebar-link flex items-center space-x-3 p-2 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
-                    <span>Apêndice</span>
-                </a>
-            </div>
-        </nav>
+            <div class="hero-content">
 
-        <button id="menu-button" class="fixed top-4 left-4 z-50 md:hidden bg-ice-white p-2 rounded-full shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-charcoal-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-        </button>
+                <h1 class="hero-headline">Transforme Sua Perspectiva Criativa: A IA Como Parceira de Inovação</h1>
 
-        <main class="w-full md:ml-64 p-4 sm:p-8 lg:p-12">
-            <div class="prose mx-auto">
-                
-                <header id="home" class="text-center my-16">
-                    <h1 class="text-5xl md:text-7xl font-bold gradient-text leading-tight uppercase">IA Criativa na Prática</h1>
-                    <p class="mt-4 text-xl md:text-2xl text-ice-white">Domine a nova era da criatividade com Inteligência Artificial.</p>
-                </header>
+                <p class="hero-subheadline">Descubra como integrar inteligência artificial ao seu processo criativo de forma estratégica e humanizada, expandindo suas possibilidades sem perder sua essência artística.</p>
 
-                <section id="introducao" class="space-y-8 my-16">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-fuchsia);">Introdução: O Novo Terreno Criativo</h2>
-                    <p class="text-ice-white">Bem-vindo à era onde a Inteligência Artificial não é mais uma promessa distante, mas uma força presente e transformadora no nosso dia a dia. Para nós, profissionais criativos, isso não é uma ameaça, mas a maior oportunidade de evolução da nossa geração. Este guia é o seu mapa para navegar neste novo terreno, transformando riscos em oportunidades e se tornando um profissional indispensável.</p>
-                    <div class="card grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h4 class="text-xl font-bold" style="color: var(--c-blue-deep);">Oportunidades</h4>
-                            <ul class="mt-2 list-disc list-inside text-medium-gray">
-                                <li>Aceleração de tarefas repetitivas.</li>
-                                <li>Expansão da capacidade de ideação.</li>
-                                <li>Personalização em massa.</li>
-                                <li>Criação de novos tipos de produtos.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xl font-bold" style="color: var(--c-fuchsia);">Riscos (para os não preparados)</h4>
-                            <ul class="mt-2 list-disc list-inside text-medium-gray">
-                                <li>Comoditização de habilidades técnicas.</li>
-                                <li>Concorrência com automação.</li>
-                                <li>Perda de relevância no mercado.</li>
-                                <li>Dificuldade em agregar valor.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="https://example.com" target="_blank" class="btn btn-secondary">🔗 Ler artigo completo de referência</a>
-                    </div>
-                </section>
+                <div class="hero-cta">
 
-                <section id="capitulo1" class="space-y-8 my-16">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-green-neon);">1. Por que você precisa dominar IA agora</h2>
-                    <p class="text-ice-white">Ignorar a IA hoje é como um fotógrafo ignorar a câmera digital nos anos 2000. É uma mudança fundamental. Profissionais que integram IA em seus fluxos de trabalho não apenas sobrevivem; eles prosperam, tornando-se mais rápidos, mais estratégicos e mais valiosos.</p>
-                    <div class="card">
-                        <h4 class="text-xl font-bold text-center mb-4 text-ice-white">Diagnóstico Rápido: Qual seu nível de uso de IA?</h4>
-                        <div id="quiz-container" class="space-y-4">
-                            <p class="text-medium-gray">Com que frequência você usa ferramentas de IA em seus projetos criativos?</p>
-                            <div class="space-y-2">
-                                <label class="flex items-center p-3 border rounded-lg hover:bg-gray-800 cursor-pointer border-gray-700 text-ice-white"><input type="radio" name="quiz" value="0" class="mr-3 accent-green-neon"> Raramente ou nunca.</label>
-                                <label class="flex items-center p-3 border rounded-lg hover:bg-gray-800 cursor-pointer border-gray-700 text-ice-white"><input type="radio" name="quiz" value="1" class="mr-3 accent-green-neon"> Ocasionalmente, para tarefas simples.</label>
-                                <label class="flex items-center p-3 border rounded-lg hover:bg-gray-800 cursor-pointer border-gray-700 text-ice-white"><input type="radio" name="quiz" value="2" class="mr-3 accent-green-neon"> Frequentemente, como parte do meu workflow.</label>
-                                <label class="flex items-center p-3 border rounded-lg hover:bg-gray-800 cursor-pointer border-gray-700 text-ice-white"><input type="radio" name="quiz" value="3" class="mr-3 accent-green-neon"> Diariamente, de forma estratégica e integrada.</label>
-                            </div>
-                            <button id="quiz-submit" class="btn btn-primary w-full mt-4">Ver meu nível</button>
-                            <p id="quiz-feedback" class="text-center font-semibold mt-4 h-6"></p>
-                        </div>
-                    </div>
-                </section>
+                    <button class="cta-button primary">ACESSAR GUIA COMPLETO</button>
 
-                <section id="capitulo2" class="space-y-8 my-16">
-                     <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-blue-deep);">2. O Novo Papel do Criativo: De Executor a Estrategista</h2>
-                     <p class="text-ice-white">A criatividade humana não será automatizada, mas sim **aumentada**. Seu valor não está mais na execução manual, mas na sua capacidade de direcionar a tecnologia, ter visão estratégica e infundir alma e contexto nos projetos. Você se torna o maestro de uma orquestra de IAs.</p>
-                </section>
-                
-                <section id="capitulo3" class="space-y-8 my-16">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-fuchsia);">3. Prompt Design: Pensando como um Engenheiro</h2>
-                    <p class="text-ice-white">A qualidade do seu resultado é diretamente proporcional à qualidade da sua instrução. "Prompt Design" é a arte de dar instruções claras, contextuais e criativas para a IA. Dominar isso é a habilidade mais importante na nova era.</p>
-                    <div class="card">
-                        <h4 class="text-xl font-bold mb-4 text-ice-white">A Anatomia de um Bom Prompt</h4>
-                        <ol class="list-decimal list-inside space-y-2 text-medium-gray">
-                            <li><strong>PERSONA:</strong> "Aja como um especialista em marketing de luxo..."</li>
-                            <li><strong>TAREFA:</strong> "...crie 5 slogans para uma nova marca de relógios."</li>
-                            <li><strong>CONTEXTO:</strong> "A marca valoriza a tradição, a precisão e a sustentabilidade."</li>
-                            <li><strong>FORMATO:</strong> "Apresente em uma tabela com colunas para Slogan e Justificativa."</li>
-                            <li><strong>REGRAS:</strong> "Os slogans devem ser curtos, memoráveis e evitar a palavra 'tempo'."</li>
-                        </ol>
-                    </div>
-                     <div class="text-center">
-                        <a href="https://example.com" target="_blank" class="btn btn-secondary">📥 Baixar Planilha de Prompts</a>
-                    </div>
-                </section>
-                
-                <section id="capitulo4" class="space-y-8 my-16">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-green-neon);">4. A Jornada do Criativo IA+ (Roadmap)</h2>
-                    <p class="text-ice-white">Sua evolução como um criativo aumentado pode ser dividida em quatro níveis. Identifique onde você está e qual o seu próximo passo.</p>
-                    <div class="relative pl-6 border-l-2 border-gray-700 space-y-12">
-                        <div class="relative">
-                            <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full" style="background-color: var(--c-fuchsia);"></div>
-                            <h4 class="font-bold text-lg text-ice-white">Nível 1: Curioso</h4>
-                            <p class="text-medium-gray">Entende o básico e experimenta ferramentas populares por diversão ou para tarefas simples.</p>
-                        </div>
-                        <div class="relative">
-                            <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full" style="background-color: var(--c-blue-deep);"></div>
-                            <h4 class="font-bold text-lg text-ice-white">Nível 2: Explorador</h4>
-                            <p class="text-medium-gray">Automatiza tarefas repetitivas e começa a integrar a IA para gerar rascunhos e ideias em projetos reais.</p>
-                        </div>
-                        <div class="relative">
-                            <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full" style="background-color: var(--c-green-neon);"></div>
-                            <h4 class="font-bold text-lg text-ice-white">Nível 3: Estrategista</h4>
-                            <p class="text-medium-gray">Usa a IA como uma parceira de negócios, para análise de dados, planejamento estratégico e otimização de resultados.</p>
-                        </div>
-                        <div class="relative">
-                            <div class="absolute -left-3.5 top-1 w-3 h-3 rounded-full" style="background-color: var(--c-fuchsia);"></div>
-                            <h4 class="font-bold text-lg text-ice-white">Nível 4: Especialista</h4>
-                            <p class="text-medium-gray">Desenvolve soluções e fluxos de trabalho personalizados com IA, criando produtos e serviços inovadores.</p>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="https://example.com" target="_blank" class="btn btn-secondary">📌 Copiar Trilha para seu Notion</a>
-                    </div>
-                </section>
+                </div>
 
-                <section id="capitulo5" class="space-y-8 my-16">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-blue-deep);">5. Ferramentas Essenciais (com Tutoriais)</h2>
-                    <p class="text-ice-white">O ecossistema de IA é vasto. Focamos nas ferramentas mais impactantes para criativos e como elas podem transformar sua atuação.</p>
-                    <div class="card">
-                        <div id="carousel-container" class="relative">
-                            <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out">
-                                <div class="carousel-slide w-full flex-shrink-0 text-center">
-                                    <h4 class="text-2xl font-bold text-ice-white">ChatGPT & Gemini</h4>
-                                    <p class="mt-2 text-medium-gray">Ideação, escrita, roteiros, estratégia. Seus parceiros de brainstorming.</p>
-                                    <a href="https://example.com" target="_blank" class="btn btn-primary mt-4">Ver Tutorial</a>
-                                </div>
-                                <div class="carousel-slide w-full flex-shrink-0 text-center">
-                                    <h4 class="text-2xl font-bold text-ice-white">Midjourney & DALL-E</h4>
-                                    <p class="mt-2 text-medium-gray">Criação de imagens, direção de arte, moodboards, prototipagem visual.</p>
-                                    <a href="https://example.com" target="_blank" class="btn btn-primary mt-4">Ver Tutorial</a>
-                                </div>
-                                <div class="carousel-slide w-full flex-shrink-0 text-center">
-                                    <h4 class="text-2xl font-bold text-ice-white">Runway & Pika</h4>
-                                    <p class="mt-2 text-medium-gray">Geração e edição de vídeo, animações, efeitos visuais.</p>
-                                    <a href="https://example.com" target="_blank" class="btn btn-primary mt-4">Ver Tutorial</a>
-                                </div>
-                                <div class="carousel-slide w-full flex-shrink-0 text-center">
-                                    <h4 class="text-2xl font-bold text-ice-white">Notion AI</h4>
-                                    <p class="mt-2 text-medium-gray">Organização, sumarização, criação de tabelas e automação de fluxos de trabalho.</p>
-                                    <a href="https://example.com" target="_blank" class="btn btn-primary mt-4">Ver Tutorial</a>
-                                </div>
-                            </div>
-                            <button id="prev-btn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-charcoal-deep/50 text-ice-white p-2 rounded-full shadow-md hover:bg-charcoal-deep">&lt;</button>
-                            <button id="next-btn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-charcoal-deep/50 text-ice-white p-2 rounded-full shadow-md hover:bg-charcoal-deep">&gt;</button>
-                        </div>
-                    </div>
-                </section>
+                <div class="ebook-mockup">
 
-                <section id="capitulo6" class="space-y-8 my-16">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2" style="border-color: var(--c-green-neon);">6. Casos Reais de Aplicação</h2>
-                    <p class="text-ice-white">Vamos da teoria à prática. Veja como a IA está sendo usada para criar trabalhos incríveis no mundo real.</p>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="card-light">
-                            <h4 class="font-bold text-lg text-charcoal-deep">Direção de Arte com Midjourney</h4>
-                            <p class="text-medium-gray mt-2">Criação de um key visual completo para uma campanha em menos de 2 horas, testando dezenas de conceitos.</p>
-                        </div>
-                        <div class="card-light">
-                            <h4 class="font-bold text-lg text-charcoal-deep">Criação de Naming com GPT</h4>
-                            <p class="text-medium-gray mt-2">Geração de mais de 100 opções de nomes para uma startup, incluindo verificação de domínio e significado.</p>
-                        </div>
-                    </div>
-                     <div class="text-center mt-8">
-                        <a href="https://example.com" target="_blank" class="btn btn-secondary">📂 Ver Template no Canva</a>
-                    </div>
-                </section>
+                    <div class="mockup-device">
 
-                <section id="apendice" class="space-y-8 my-16 p-8 rounded-xl" style="background-color: var(--c-fuchsia);">
-                    <h2 class="text-3xl font-bold border-b-2 pb-2 text-ice-white" style="border-color: var(--c-green-neon);">Apêndice: Guia de Sobrevivência</h2>
-                    <p class="text-ice-white">Seu guia rápido para se manter autêntico, relevante e à frente na era da automação.</p>
-                    <div class="card-light">
-                        <h4 class="text-xl font-bold mb-4 text-charcoal-deep">Os 10 Mandamentos do Criativo do Futuro</h4>
-                        <ol class="list-decimal list-inside text-medium-gray space-y-1">
-                            <li>Não temerás a automação, mas a abraçarás.</li>
-                            <li>Honrarás tua visão estratégica acima da execução.</li>
-                            <li>Não usarás a IA em vão, mas com propósito.</li>
-                            <li>Lembrar-te-ás de ser sempre curioso.</li>
-                            <li>Aprenderás a arte do Prompt Design.</li>
-                            <li>Não cobiçarás o trabalho alheio, mas criarás o teu.</li>
-                            <li>Não levantarás falso testemunho sobre tuas habilidades.</li>
-                            <li>Serás o curador, não apenas o criador.</li>
-                            <li>Manterás tua autenticidade.</li>
-                            <li>Nunca pararás de aprender.</li>
-                        </ol>
-                    </div>
-                    <div class="text-center">
-                        <a href="https://example.com" target="_blank" class="btn btn-secondary" style="background-color: var(--c-green-neon); color: var(--c-charcoal-deep); border: none; box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);">📥 Baixar Cartaz Imprimível</a>
-                    </div>
-                </section>
+                        <div class="mockup-screen">
 
-            </div>
-            <footer class="text-center text-medium-gray mt-16 py-8 border-t border-gray-700">
-                <p>&copy; 2025 Criativos Inteligentes. Todos os direitos reservados.</p>
-            </footer>
-        </main>
-    </div>
-    
-    <div id="toast" class="fixed bottom-5 right-5 bg-charcoal-deep text-ice-white py-2 px-4 rounded-lg shadow-lg opacity-0 translate-y-3 transition-all duration-300">
-        Texto copiado!
-    </div>
+                            <div class="mockup-content">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const landingPage = document.getElementById('landing-page-container');
-            const ebookFullView = document.getElementById('ebook-full-view');
-            const openEbookBtns = document.querySelectorAll('.cta-button');
-            const backBtn = document.getElementById('back-btn');
-            const toast = document.getElementById('toast');
+                                <h3>GUIA PRÁTICO</h3>
 
-            openEbookBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    landingPage.classList.add('hide-on-click');
-                    ebookFullView.classList.remove('hide-on-click');
-                    ebookFullView.classList.add('show-on-click');
-                    document.body.classList.add('body-ebook');
-                    window.scrollTo(0, 0);
-                });
-            });
+                                <p>IA Criativa Colaborativa</p>
 
-            backBtn.addEventListener('click', () => {
-                ebookFullView.classList.add('hide-on-click');
-                ebookFullView.classList.remove('show-on-click');
-                landingPage.classList.remove('hide-on-click');
-                document.body.classList.remove('body-ebook');
-                window.scrollTo(0, 0);
-            });
+                            </div>
 
-            const sidebar = document.getElementById('sidebar');
-            const menuButton = document.getElementById('menu-button');
-            menuButton.addEventListener('click', () => {
-                sidebar.classList.toggle('-translate-x-full');
-            });
+                        </div>
 
-            const sidebarLinks = document.querySelectorAll('.sidebar-link');
-            const sections = document.querySelectorAll('section');
+                    </div>
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        sidebarLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href').substring(1) === entry.target.id) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, { rootMargin: "-50% 0px -50% 0px" });
+                </div>
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
-            const quizContainer = document.getElementById('quiz-container');
-            if(quizContainer) {
-                const quizSubmit = document.getElementById('quiz-submit');
-                const quizFeedback = document.getElementById('quiz-feedback');
-                const quizRadios = document.querySelectorAll('input[name="quiz"]');
+            </div>
 
-                quizSubmit.addEventListener('click', () => {
-                    let selectedValue = null;
-                    for (const radio of quizRadios) {
-                        if (radio.checked) {
-                            selectedValue = radio.value;
-                            break;
-                        }
-                    }
-                    const feedbacks = {
-                        '0': 'Nível: Curioso. Ótimo ponto de partida!',
-                        '1': 'Nível: Explorador. Você já começou a jornada!',
-                        '2': 'Nível: Estrategista. Você está no caminho certo!',
-                        '3': 'Nível: Especialista. Você já é um Criativo IA+!'
-                    };
-                    if(selectedValue !== null) {
-                        quizFeedback.textContent = feedbacks[selectedValue];
-                        quizFeedback.style.color = 'var(--c-green-neon)';
-                    } else {
-                        quizFeedback.textContent = 'Por favor, selecione uma opção.';
-                        quizFeedback.style.color = 'var(--c-fuchsia)';
-                    }
-                });
-            }
+        </div>
 
-            const carouselTrack = document.getElementById('carousel-track');
-            if(carouselTrack) {
-                const prevBtn = document.getElementById('prev-btn');
-                const nextBtn = document.getElementById('next-btn');
-                const slides = document.querySelectorAll('.carousel-slide');
-                let currentIndex = 0;
-                const totalSlides = slides.length;
+    </section>
 
-                function updateCarousel() {
-                    carouselTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
-                }
 
-                nextBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % totalSlides;
-                    updateCarousel();
-                });
 
-                prevBtn.addEventListener('click', () => {
-                    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-                    updateCarousel();
-                });
-            }
-        });
-    </script>
+    <!-- O Que Você Vai Receber -->
+
+    <section class="benefits">
+
+        <div class="container">
+
+            <h2 class="section-title">Um Ecossistema Completo de Conhecimento</h2>
+
+            <p class="section-intro">Este material foi desenvolvido para profissionais criativos que buscam evoluir sua prática através da integração inteligente com IA. Oferecemos uma abordagem estruturada que combina teoria sólida com aplicação prática imediata.</p>
+
+            
+
+            <div class="benefits-grid">
+
+                <div class="benefit-card">
+
+                    <div class="benefit-icon">
+
+                        <div class="icon-prompts"></div>
+
+                    </div>
+
+                    <h3>Biblioteca de Prompts Estruturados e Validados</h3>
+
+                    <p>Uma coleção cuidadosamente elaborada de prompts testados em diferentes contextos criativos. Cada prompt é acompanhado de explicações sobre quando e como aplicá-lo, permitindo que você desenvolva sua própria fluência com IA.</p>
+
+                </div>
+
+                
+
+                <div class="benefit-card">
+
+                    <div class="benefit-icon">
+
+                        <div class="icon-spreadsheets"></div>
+
+                    </div>
+
+                    <h3>Ferramentas de Organização e Workflow</h3>
+
+                    <p>Planilhas e templates que facilitam a gestão de projetos criativos com IA. Desde brainstorming estruturado até controle de versões, oferecemos sistemas práticos para otimizar seu processo de trabalho.</p>
+
+                </div>
+
+                
+
+                <div class="benefit-card">
+
+                    <div class="benefit-icon">
+
+                        <div class="icon-learning"></div>
+
+                    </div>
+
+                    <h3>Metodologia Progressiva de Aprendizado</h3>
+
+                    <p>Um caminho estruturado que parte dos fundamentos até técnicas avançadas, respeitando diferentes níveis de familiaridade com tecnologia. Cada capítulo constrói sobre o anterior, garantindo compreensão sólida.</p>
+
+                </div>
+
+                
+
+                <div class="benefit-card">
+
+                    <div class="benefit-icon">
+
+                        <div class="icon-techniques"></div>
+
+                    </div>
+
+                    <h3>Estudos de Caso e Aplicações Práticas</h3>
+
+                    <p>Análises detalhadas de projetos reais onde IA foi integrada com sucesso, mostrando o processo de tomada de decisão, os desafios enfrentados e as soluções encontradas por profissionais de diferentes áreas.</p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="key-benefits">
+
+                <h3>Transformações Que Você Pode Esperar:</h3>
+
+                <div class="benefits-list">
+
+                    <div class="benefit-item">
+
+                        <span class="benefit-check">✓</span>
+
+                        <div>
+
+                            <strong>Expansão do Pensamento Criativo:</strong> Desenvolva uma nova perspectiva sobre geração de ideias, usando IA como catalisador para explorar territórios criativos inexplorados.
+
+                        </div>
+
+                    </div>
+
+                    <div class="benefit-item">
+
+                        <span class="benefit-check">✓</span>
+
+                        <div>
+
+                            <strong>Otimização Inteligente de Processos:</strong> Identifique oportunidades de automação que preservam a qualidade criativa enquanto reduzem tempo em tarefas repetitivas.
+
+                        </div>
+
+                    </div>
+
+                    <div class="benefit-item">
+
+                        <span class="benefit-check">✓</span>
+
+                        <div>
+
+                            <strong>Desenvolvimento de Fluência Tecnológica:</strong> Construa confiança e competência no uso de ferramentas de IA, tornando-se um profissional mais versátil e adaptável.
+
+                        </div>
+
+                    </div>
+
+                    <div class="benefit-item">
+
+                        <span class="benefit-check">✓</span>
+
+                        <div>
+
+                            <strong>Posicionamento Estratégico no Mercado:</strong> Compreenda como integrar IA de forma ética e diferenciada, criando valor único em seus projetos e serviços.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Para Quem É Esse Material -->
+
+    <section class="target-audience">
+
+        <div class="container">
+
+            <h2 class="section-title">Perfil do Profissional Inovador</h2>
+
+            <p class="section-intro">Este material foi criado para profissionais criativos que reconhecem a importância de evoluir com as tecnologias emergentes, mantendo sua humanidade e propósito no centro do processo criativo.</p>
+
+            
+
+            <div class="personas-grid">
+
+                <div class="persona-card">
+
+                    <div class="persona-icon">
+
+                        <div class="icon-designer"></div>
+
+                    </div>
+
+                    <h3>Designer em Evolução</h3>
+
+                    <p>Você busca expandir suas capacidades criativas e explorar novas formas de expressão visual, usando IA como ferramenta colaborativa para potencializar sua visão artística.</p>
+
+                </div>
+
+                
+
+                <div class="persona-card">
+
+                    <div class="persona-icon">
+
+                        <div class="icon-social-media"></div>
+
+                    </div>
+
+                    <h3>Estrategista de Conteúdo</h3>
+
+                    <p>Profissional que deseja criar narrativas mais impactantes e personalizadas, utilizando IA para análise de tendências e geração de insights sobre audiências.</p>
+
+                </div>
+
+                
+
+                <div class="persona-card">
+
+                    <div class="persona-icon">
+
+                        <div class="icon-brand"></div>
+
+                    </div>
+
+                    <h3>Consultor de Marca</h3>
+
+                    <p>Especialista em branding que busca ferramentas avançadas para desenvolver identidades mais consistentes e estratégias de posicionamento inovadoras.</p>
+
+                </div>
+
+                
+
+                <div class="persona-card">
+
+                    <div class="persona-icon">
+
+                        <div class="icon-content"></div>
+
+                    </div>
+
+                    <h3>Criador de Conteúdo Reflexivo</h3>
+
+                    <p>Profissional focado em produzir conteúdo de qualidade superior, interessado em usar IA para pesquisa, estruturação e refinamento de ideias complexas.</p>
+
+                </div>
+
+                
+
+                <div class="persona-card">
+
+                    <div class="persona-icon">
+
+                        <div class="icon-agency"></div>
+
+                    </div>
+
+                    <h3>Líder de Equipe Criativa</h3>
+
+                    <p>Gestor que deseja capacitar sua equipe com metodologias inovadoras, implementando IA de forma estratégica para melhorar colaboração e resultados.</p>
+
+                </div>
+
+                
+
+                <div class="persona-card">
+
+                    <div class="persona-icon">
+
+                        <div class="icon-creative"></div>
+
+                    </div>
+
+                    <h3>Profissional Criativo Curioso</h3>
+
+                    <p>Qualquer pessoa que trabalha com criatividade e está genuinamente interessada em compreender como a IA pode enriquecer sua prática profissional.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- O Que Torna Esse eBook Diferente -->
+
+    <section class="differentials">
+
+        <div class="container">
+
+            <h2 class="section-title">Nossa Abordagem Diferenciada</h2>
+
+            <p class="section-intro">Em um cenário saturado de conteúdo superficial sobre IA, desenvolvemos uma metodologia que privilegia a compreensão profunda e a aplicação consciente da tecnologia no contexto criativo.</p>
+
+            
+
+            <div class="differentials-list">
+
+                <div class="differential-item">
+
+                    <div class="differential-icon">
+
+                        <div class="icon-tested"></div>
+
+                    </div>
+
+                    <div class="differential-content">
+
+                        <h3>Prompts Fundamentados em Teoria Criativa</h3>
+
+                        <p>Cada prompt foi desenvolvido com base em princípios estabelecidos de design thinking e criatividade. Não oferecemos apenas comandos, mas explicamos a lógica por trás de cada abordagem.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="differential-item">
+
+                    <div class="differential-icon">
+
+                        <div class="icon-universal"></div>
+
+                    </div>
+
+                    <div class="differential-content">
+
+                        <h3>Metodologia Agnóstica de Plataforma</h3>
+
+                        <p>Nosso foco está nos princípios universais de colaboração com IA, que podem ser aplicados em qualquer ferramenta atual ou futura, garantindo relevância duradoura do conhecimento.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="differential-item">
+
+                    <div class="differential-icon">
+
+                        <div class="icon-visual"></div>
+
+                    </div>
+
+                    <div class="differential-content">
+
+                        <h3>Experiência de Aprendizado Imersiva</h3>
+
+                        <p>Combinamos texto, visualizações, exemplos interativos e exercícios práticos para facilitar a compreensão e retenção de conceitos complexos sobre IA criativa.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="differential-item">
+
+                    <div class="differential-icon">
+
+                        <div class="icon-aesthetic"></div>
+
+                    </div>
+
+                    <div class="differential-content">
+
+                        <h3>Design Como Demonstração Prática</h3>
+
+                        <p>Este material exemplifica na prática os conceitos que ensina, servindo como um estudo de caso vivo de como IA e criatividade humana podem colaborar harmoniosamente.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="differential-item">
+
+                    <div class="differential-icon">
+
+                        <div class="icon-strategy"></div>
+
+                    </div>
+
+                    <div class="differential-content">
+
+                        <h3>Foco em Estratégia e Contexto</h3>
+
+                        <p>Vamos além do "como fazer" para explorar "quando aplicar" e "por que escolher" determinadas abordagens, desenvolvendo seu pensamento estratégico sobre IA.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="differential-item">
+
+                    <div class="differential-icon">
+
+                        <div class="icon-interactive"></div>
+
+                    </div>
+
+                    <div class="differential-content">
+
+                        <h3>Conteúdo Dinâmico e Evolutivo</h3>
+
+                        <p>Um material interativo que facilita a navegação e compreensão, com recursos multimídia que enriquecem a experiência de aprendizado de forma orgânica.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Prévia do Conteúdo -->
+
+    <section class="preview">
+
+        <div class="container">
+
+            <h2 class="section-title">Jornada de Descoberta</h2>
+
+            <p class="section-intro">Explore alguns dos conceitos-chave que você encontrará nesta jornada de descoberta sobre a integração criativa com inteligência artificial.</p>
+
+            
+
+            <div class="preview-carousel">
+
+                <div class="preview-slide active">
+
+                    <div class="slide-content">
+
+                        <h3>Fundamentos da Colaboração Criativa com IA</h3>
+
+                        <p>Compreenda os princípios que regem a parceria efetiva entre criatividade humana e inteligência artificial, estabelecendo bases sólidas para experimentação consciente.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="preview-slide">
+
+                    <div class="slide-content">
+
+                        <h3>Anatomia de Prompts Eficazes</h3>
+
+                        <p>Desvende a estrutura e psicologia por trás de comandos que geram resultados criativos consistentes, aprendendo a comunicar-se efetivamente com sistemas de IA.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="preview-slide">
+
+                    <div class="slide-content">
+
+                        <h3>Integração Estratégica em Workflows Criativos</h3>
+
+                        <p>Descubra como incorporar IA de forma orgânica em seus processos existentes, identificando pontos de alavancagem sem comprometer sua identidade criativa.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="preview-slide">
+
+                    <div class="slide-content">
+
+                        <h3>Estudos de Caso: Transformação na Prática</h3>
+
+                        <p>Analise implementações reais de IA em diferentes contextos criativos, compreendendo desafios, soluções e resultados alcançados por profissionais inovadores.</p>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="preview-slide">
+
+                    <div class="slide-content">
+
+                        <h3>Ética e Futuro da Criatividade Assistida</h3>
+
+                        <p>Reflexões sobre uso responsável de IA, preservação da autenticidade criativa e preparação para as próximas ondas de inovação tecnológica.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="carousel-controls">
+
+                <button class="carousel-btn prev" onclick="changeSlide(-1)">‹</button>
+
+                <div class="carousel-dots">
+
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+
+                    <span class="dot" onclick="currentSlide(2)"></span>
+
+                    <span class="dot" onclick="currentSlide(3)"></span>
+
+                    <span class="dot" onclick="currentSlide(4)"></span>
+
+                    <span class="dot" onclick="currentSlide(5)"></span>
+
+                </div>
+
+                <button class="carousel-btn next" onclick="changeSlide(1)">›</button>
+
+            </div>
+
+            
+
+            <div class="preview-cta">
+
+                <button class="cta-button secondary">INICIAR JORNADA DE APRENDIZADO</button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Depoimentos -->
+
+    <section class="testimonials">
+
+        <div class="container">
+
+            <h2 class="section-title">Impacto na Comunidade Criativa</h2>
+
+            <p class="section-intro">Profissionais que aplicaram estes conhecimentos compartilham suas experiências de transformação e crescimento através da integração consciente com IA:</p>
+
+            
+
+            <div class="testimonials-grid">
+
+                <div class="testimonial-card">
+
+                    <div class="testimonial-content">
+
+                        <p>"Este material mudou fundamentalmente minha relação com tecnologia. Passei de receosa para colaborativa, descobrindo possibilidades criativas que não imaginava existir."</p>
+
+                    </div>
+
+                    <div class="testimonial-author">
+
+                        <div class="author-avatar"></div>
+
+                        <div class="author-info">
+
+                            <strong>Ana Clara</strong>
+
+                            <span>Designer UX/UI</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="testimonial-card">
+
+                    <div class="testimonial-content">
+
+                        <p>"A abordagem estruturada me permitiu implementar IA de forma gradual e consciente. Meus projetos ganharam uma nova dimensão de profundidade e inovação."</p>
+
+                    </div>
+
+                    <div class="testimonial-author">
+
+                        <div class="author-avatar"></div>
+
+                        <div class="author-info">
+
+                            <strong>Marcos Vinicius</strong>
+
+                            <span>Diretor Criativo</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="testimonial-card">
+
+                    <div class="testimonial-content">
+
+                        <p>"Encontrei aqui o equilíbrio perfeito entre inovação tecnológica e preservação da essência humana no processo criativo. Transformador e inspirador."</p>
+
+                    </div>
+
+                    <div class="testimonial-author">
+
+                        <div class="author-avatar"></div>
+
+                        <div class="author-info">
+
+                            <strong>Juliana Lima</strong>
+
+                            <span>Consultora de Marca</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <div class="validation">
+
+                <p>Este material representa o esforço colaborativo de uma equipe multidisciplinar de criativos, tecnólogos e educadores, unidos pela missão de democratizar o acesso ao conhecimento sobre IA criativa de forma ética e inclusiva.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CTA Final -->
+
+    <section class="final-cta">
+
+        <div class="container">
+
+            <div class="cta-content">
+
+                <h2>Sua Evolução Criativa Começa Agora</h2>
+
+                <p>A integração entre criatividade humana e inteligência artificial define uma nova era de possibilidades. Este é o momento de desenvolver as competências que moldarão o futuro da expressão criativa.</p>
+
+                <button class="cta-button primary large">COMEÇAR TRANSFORMAÇÃO CRIATIVA</button>
+
+                <p class="cta-subtitle">Acesso completo ao conhecimento • Atualizações contínuas • Comunidade de aprendizado</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+        let currentSlideIndex = 0;
+
+        const slides = document.querySelectorAll('.preview-slide');
+
+        const dots = document.querySelectorAll('.dot');
+
+
+
+        function showSlide(index) {
+
+            slides.forEach((slide, i) => {
+
+                slide.classList.toggle('active', i === index);
+
+            });
+
+            dots.forEach((dot, i) => {
+
+                dot.classList.toggle('active', i === index);
+
+            });
+
+        }
+
+
+
+        function changeSlide(direction) {
+
+            currentSlideIndex += direction;
+
+            if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+
+            if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
+
+            showSlide(currentSlideIndex);
+
+        }
+
+
+
+        function currentSlide(index) {
+
+            currentSlideIndex = index - 1;
+
+            showSlide(currentSlideIndex);
+
+        }
+
+
+
+        // Auto-advance slides
+
+        setInterval(() => {
+
+            changeSlide(1);
+
+        }, 5000);
+
+    </script>
+
 </body>
+
 </html>
